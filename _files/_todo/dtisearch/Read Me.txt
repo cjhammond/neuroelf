@@ -1,0 +1,29 @@
+Calculating Tensor Data:
+  1. Run program [DiffusionTensorCalculation.m]
+  2. At the first, you should import the DWI data (*dicom; ima etc.)into MATLAB according to the roles by youself.
+  3. Setting the parameters of the "Parameters Setting" zone.
+
+
+Whole Brain Fiber Tractography: Streamline Tracking Technique (STT): 
+  1. Run program [Tractography_STT_Euler.m]
+  2. Setting the path of Tensor data 
+  3. Setting the parameters of the "Parameters Setting" zone.
+  
+
+Fiber Visulization and ROI Operation: 
+  1. Run program [DtiSearch.m]
+  2. Press [File] -> [Load DTI-mat-data file] to load the Export data of program [Tractography_STT_Euler.m]
+  3. Press [Zoom] or [Pan] if you want to enlarge or move image before drawing ROI,
+  3. Choosing the togglebutton of [Axial], [Sagittal] or [Coronal] before you use ROI Tools [Rect-], [Oval-], 
+     [Poly-], [Free] to draw the ROI. 
+  4. Press [Fiber Visualization] to create the 3D fiber tracts image.
+  5. You can use ROI opeation button [NON], [OR], [AND] or [NOT] to filter the fiber tracts before drawing next ROI.
+  6. The Red marks of [Marked FA images] are the pixels of fiber tracts paththrough, it can help you to decide the ROI position.
+  7. Saving images of axial, sagittal, coronal by [Save images(Axial)], [Save images(Sagittal)], [Save images(Coronal)],
+     respectively. Including single image w/o and w/ slice indicator [Current image] [Current image(With linemark and ROI)], 
+     and a series of images by montage [Series images of montage].
+
+
+
+
+

@@ -1,0 +1,56 @@
+# TextFileFormat (leave this tag as magic token!)
+
+# BrainVoyager QX file format for *.MDM files (Multi-study Design Matrix)
+# MDM FileVersions supported: 1,2,3
+#
+# Version:  v0.9c
+# Build:    11101313
+# Date:     Oct-13 2011, 1:54 PM EST
+# Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
+# URL/Info: http://neuroelf.net/
+
+# FILE FORMAT
+Description:Multi-study GLM definition files
+Extensions:mdm
+FieldDelimiters: {[32]}
+LineDelimiters: {[13, 10], [10]}
+ParagraphArrays:0
+SkipEmptyLines:1
+Magic:|
+name          |range       |type    |magic
+MDM_FVSPNS    |1, 128      |regexpi |fileversion\:\s*\d+\s*(ztransformation\:?\s*\d+\s*)?separatepredictors\:\s*\d+\s*nrofstudies\:\s*\d+
+EndMagic
+
+# Field description
+ListOfFields:!
+type !cond               !field               !datatype!format !dim    !default !varname
+FIELD!                   !FileVersion         !double  !%d     !1      !3       !FileVersion
+
+EXPRE!$TFFREAD      !!!!!!@TypeOfFunctionalData = 'Unknown'; @RFX_GLM = 0; @PSCTransformation = 0; @zTransformation = 0; @SeparatePredictors = 0;
+EXPRE!$TFFWRITE     !!!!!!@NrOfStudies = size(@XTC_RTC, 1);
+FLIST!@FileVersion > 1   !TypeOfFunctionalData!string  !%s     !1      !        !TypeOfFunctionalData
+WRTLN!@FileVersion > 1 !!!!!!!  # empty line
+FLIST!@FileVersion > 2   !RFX-GLM             !double  !%d     !1      !0       !RFX_GLM
+WRTLN!@FileVersion > 2 !!!!!!!  # empty line
+FLIST!@FileVersion > 1   !PSCTransformation   !double  !%d     !1      !0       !PSCTransformation
+
+FIELD!                   !zTransformation     !double  !%d     !1      !1       !zTransformation
+FIELD!                   !SeparatePredictors  !double  !%d     !1      !1       !SeparatePredictors
+WRTLN!!!!!!!!  # empty line
+FIELD!                   !NrOfStudies         !double  !%d     !1      !        !NrOfStudies
+
+EXPRE!!!!!!!if strcmp(lower(@TypeOfFunctionalData), 'mtc'), $rwcols = 3; else $rwcols = 2; end
+ARRAY!                   !XTC_RTC             !string  !"%s"   !@NrOfStudies, $rwcols!!XTC_RTC
+
+EndListOfFields
+
+NewFileCode:!
+@FileVersion = 3;
+@TypeOfFunctionalData = 'VTC';
+@RFX_GLM = 1;
+@PSCTransformation = 1;
+@zTransformation = 0;
+@SeparatePredictors = 2;
+@NrOfStudies = 0;
+@XTC_RTC = cell(0, 2);
+EndNewFileCode

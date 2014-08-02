@@ -1,0 +1,116 @@
+---  BEGIN_COMMENTS  ---
+
+NeuroElf - contrast manager GUI
+
+Version:  0.9d
+Build:    14062716
+Date:     Jun-27 2014, 4:23 PM EST
+Figure:   NeuroElf GUI - GLM contrast manager
+Author:   Jochen Weber
+Info:     Figure created for NeuroElf GUI - GLM contrast manager
+
+% Copyright (c) 2010 - 2014, Jochen Weber
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in the
+%       documentation and/or other materials provided with the distribution.
+%     * Neither the name of Columbia University nor the
+%       names of its contributors may be used to endorse or promote products
+%       derived from this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+% ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+% WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+% DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+% (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+% ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+---   END_COMMENTS   ---
+
+---   BEGIN_FIGURE   ---
+Comment |Units |Visible|Position               |Title                                 |Tag                        |CallbackClReq
+        |pixels|off    |$   -1   -1  680  454  |NeuroElf GUI - GLM configure contrasts|Wnd_NeuroElf_contrasts    |
+---    END_FIGURE    ---
+
+
+--- BEGIN_UICONTROLS ---
+Comment |Type       |Position              |Caption                                   |Tag                |FontSize|HAlign|VAlign|Enabled|EGroups|RGroup|Value|MinMaxTop|ToolTip
+        |           |                      |                                          |                       |    |      |      |       |       |      |     |         |
+        |Label      |$   12  424   30   18 |GLM:                                      |                       |$ 9 |left  |      |       |       |      |     |         |
+        |DropDown   |$   36   -4  192  -26 |<no GLM loaded>                           |DD_NeuroElf_CM_GLMs    |$ 9 |left  |      |       |       |      |     |         |
+        |Label      |$  -36  -26   40  -18 |Groups:                                   |                       |$ 9 |left  |      |       |       |      |     |         |
+        |CheckBox   |$   48    4  -18    0 |                                          |CB_NeuroElf_CM_groups  |    |center|      |off    |RFXGLM |      |$ 0  |         |
+        |Button     |$   40    0   18  -18 |]neuroelf_file('i', 'plus')               |BT_NeuroElf_CM_addgrp  |    |center|      |off    |Groups |      |     |         |
+        |Button     |$   24    0    0    0 |]neuroelf_file('i', 'minus')              |BT_NeuroElf_CM_delgrp  |    |center|      |off    |Groups |      |     |         |
+        |Button     |$   24   -4   92  -26 |Rename                                    |BT_NeuroElf_CM_rengrp  |$ 9 |center|      |off    |Groups |      |     |         |
+        |DropDown   |$ -138  -30  232  -24 |<no groups specified>                     |DD_NeuroElf_CM_groups  |$ 9 |left  |      |off    |Groups |      |     |         |
+        |RadioButton|$    2  -24  116  -18 |compare groups                            |RB_NeuroElf_CM_grpcmp  |$ 9 |left  |      |       |Groups |TGrp  |$ 1  |         |
+        |RadioButton|$  116    0    0    0 |separate groups                           |RB_NeuroElf_CM_grpsep  |$ 9 |left  |      |       |Groups |TGrp  |     |         |
+        |Label      |$ -116  -32  224  -18 |Subject selection:                        |TX_NeuroElf_CM_subjects|$ 9 |left  |      |       |HasSubs|      |     |         |
+        |ListBox    |$    0 -174    0 -174 |empty                                     |LB_NeuroElf_CM_subjects|$ 9 |      |      |       |HasSubs|      |     |$ 0 2 1  |
+        |Label      |$    0  -26    0  -18 |Available covariates:                     |                       |$ 9 |left  |      |       |       |      |     |         |
+        |ListBox    |$    0  -98  204  -98 |empty                                     |LB_NeuroElf_CM_covariates|$9|      |      |       |RFXGLM |      |     |$ 0 2 1  |
+        |Button     |$  208   80   18  -18 |]neuroelf_file('i', 'folder')             |BT_NeuroElf_CM_covload |    |center|      |       |RFXGLM |      |     |         |Load covariate(s)...
+        |Button     |$    0  -20    0    0 |]neuroelf_file('i', 'mroi')               |BT_NeuroElf_CM_covroi  |    |center|      |       |RFXGLM |      |     |         |Extract covariate from current contrast and selected VOI(s)
+        |Button     |$    0  -20    0    0 |]neuroelf_file('i', 'props')              |BT_NeuroElf_CM_covprops|    |center|      |       |RFXGLM |      |     |         |Extract covariate from current contrast and selected VOI(s)
+        |Button     |$    0  -20    0    0 |]neuroelf_file('i', 'plus')               |BT_NeuroElf_CM_covadd  |    |center|      |       |RFXGLM |      |     |         |Add covariate(s)...
+        |Button     |$    0  -20    0    0 |]neuroelf_file('i', 'minus')              |BT_NeuroElf_CM_covdel  |    |center|      |       |RFXGLM |      |     |         |Remove selected covariate(s)
+        |Frame      |$  244    4    1  446 |                                          |                       |    |      |      |       |       |      |     |         |
+        |           |                      |                                          |                       |    |      |      |       |       |      |     |         |
+        |Label      |$    8  420   56  -18 |Contrasts:                                |                       |$ 9 |left  |      |       |       |      |     |         |
+        |DropDown   |$   64   -4  224  -26 |<as currently configured>                 |DD_NeuroElf_CM_contrast|$ 9 |left  |      |off    |HasCons|      |     |         |
+        |Button     |$  230    8   18  -18 |]neuroelf_file('i', 'plus')               |BT_NeuroElf_CM_addcon  |    |center|      |       |       |      |     |         |
+        |Button     |$   26    0    0    0 |]neuroelf_file('i', 'minus')              |BT_NeuroElf_CM_delcon  |    |center|      |off    |HasCons|      |     |         |
+        |Button     |$   26   -4   72  -26 |Rename                                    |BT_NeuroElf_CM_rencon  |$ 9 |center|      |off    |HasCons|      |     |         |
+        |Label      |$ -346  -30  304  -18 |Predictors:                               |                       |$ 9 |left  |      |       |       |      |     |         |
+        |Label      |$  312    0  -86    0 |Weights:                                  |                       |$ 9 |left  |      |       |       |      |     |         |
+        |ListBox    |$ -312 -200  304 -200 |empty                                     |LB_NeuroElf_CM_predlist|$ 9 |      |      |       |       |      |     |$ 0 2 1  |
+        |ListBox    |$  312    0  -86    0 |empty                                     |LB_NeuroElf_CM_pweights|$ 9 |      |      |       |       |      |     |$ 0 2 1  |
+        |Button     |$   92  182   18  -18 |]neuroelf_file('i', '1')                  |BT_NeuroElf_CM_cwp1   ||center|      |       |       |      |     |         |
+        |Button     |$    0  -26    0    0 |]imread([neuroelf_path('icons') '/0.tif'])     |BT_NeuroElf_CM_cw0    ||center|      |       |       |      |     |         |
+        |Button     |$    0  -26    0    0 |]imread([neuroelf_path('icons') '/-1.tif'])    |BT_NeuroElf_CM_cwn1   ||center|      |       |       |      |     |         |
+        |Button     |$    0  -26    0    0 |]imread([neuroelf_path('icons') '/xval.tif'])  |BT_NeuroElf_CM_cwval  ||center|      |       |       |      |     |         |
+        |Button     |$    0  -76    0    0 |]imread([neuroelf_path('icons') '/c.tif'])     |BT_NeuroElf_CM_cwc    ||center|      |       |       |      |     |         |
+        |Button     |$    0  -26    0    0 |]imread([neuroelf_path('icons') '/balance.tif'])|BT_NeuroElf_CM_cwb   ||center|      |       |       |      |     |         |
+        |Frame      |$ -406  -10  424   -1 |                                          |                       |    |      |      |       |       |      |     |         |
+        |           |                      |                                          |                       |    |      |      |       |       |      |     |         |
+        |Label      |$    2  -30  100  -18 |Type of statistic:                        |                       |$ 9 |left  |      |       |       |      |     |         |
+        |RadioButton|$  100    2  -76    0 |OLS only                                  |RB_NeuroElf_CM_OLSonly |$ 9 |left  |      |       |RFXGLM |Stats |$ 1  |         |
+        |RadioButton|$   76    0  -88    0 |Robust only                               |RB_NeuroElf_CM_Robust  |$ 9 |left  |      |       |RFXGLM |Stats |     |         |
+        |RadioButton|$   88    0 -108    0 |OLS + robust                              |RB_NeuroElf_CM_OLSRobust|$9 |left  |      |       |RFXGLM |Stats |     |         |
+        |Label      |$  100   -2  -36    0 |]['RFX ']                                 |                       |$ 9 |right |      |       |       |      |     |         |
+        |CheckBox   |$   40    4  -18    0 |                                          |CB_NeuroElf_CM_RFXstats|    |center|      |off    |RFXGLM |      |$ 1  |         |
+        |Label      |$ -404  -32  192  -18 |Rank-transform data (correlation only)    |                       |$ 9 |left  |      |off    |UseCovs|      |     |         |
+        |CheckBox   |$  196    4  -18    0 |                                          |CB_NeuroElf_CM_rnktrans|    |center|      |off    |UseCovs|      |$ 0  |         |
+        |Label      |$   34   -4  160  -18 |Add all regressors to one model           |                       |$ 9 |left  |      |off    |UseCovs,NCovs||     |         |
+        |CheckBox   |$  174    4  -18    0 |                                          |CB_NeuroElf_CM_allregs |    |center|      |off    |UseCovs,NCovs||$ 0  |         |
+        |Label      |$ -404  -32 -192    0 |Add global mean (of map) as covariate     |                       |$ 9 |left  |      |off    |RFXGLM |      |     |         |
+        |CheckBox   |$  196    4  -18    0 |                                          |CB_NeuroElf_CM_addGmean|    |center|      |off    |RFXGLM |      |$ 0  |         |
+        |Label      |$   34   -4  -50    0 |Store in:                                 |TX_NeuroElf_CM_storeVMP|$ 9 |left  |      |       |       |      |     |         |
+        |DropDown   |$   52   -2 -146  -26 |<new.vmp>                                 |DD_NeuroElf_CM_storeVMP|$ 9 |left  |      |       |       |      |$ 1  |         |
+        |Label      |$ -282  -28 -192  -18 |Smooth maps prior to regression:          |                       |$ 9 |left  |      |       |       |      |     |         |
+        |CheckBox   |$  196    4  -18    0 |                                          |CB_NeuroElf_CM_smdata  |    |center|      |       |       |      |$ 0  |         |
+        |Edit       |$   34   -4   44  -26 |]['6.0']                                  |ED_NeuroElf_CM_smdatak |$ 9 |center|      |off    |SMData |      |     |         |
+        |Label      |$   50    0   18  -18 |mm                                        |                       |$ 9 |left  |      |off    |SMData |      |     |         |
+        |Label      |$   26    0   40  -18 |interp:                                   |                       |$ 9 |left  |      |       |       |      |     |         |
+        |DropDown   |$   38   -2  -84  -26 |]{'linear';'cubic';'sinc3'}               |DD_NeuroElf_CM_imeth   |$ 9 |left  |      |       |       |      |$ 2  |         |
+        |Label      |$ -344  -28 -192  -18 |Limit individial betas between:           |                       |$ 9 |left  |      |off    |SMData |      |     |         |
+        |CheckBox   |$  196    4  -18    0 |                                          |CB_NeuroElf_CM_brange  |    |center|      |off    |SMData |      |$ 0  |         |
+        |Edit       |$   34   -4   76  -26 |]['-Inf']                                 |ED_NeuroElf_CM_brange1 |$ 9 |center|      |off    |SMData |      |     |         |
+        |Label      |$   84    0   24  -18 |and                                       |                       |$ 9 |center|      |off    |SMData |      |     |         |
+        |Edit       |$   32    0   76  -26 |]['Inf']                                  |ED_NeuroElf_CM_brange2 |$ 9 |center|      |off    |SMData |      |     |         |
+        |Button     |$ -350  -34  -94  -26 |Load cons...                              |BT_NeuroElf_CM_loadcons|    |center|      |       |       |      |     |         |
+        |Button     |$  102    0    0    0 |Save cons...                              |BT_NeuroElf_CM_savecons|    |center|      |off    |HasCons|      |     |         |
+        |Button     |$  102    0 -120    0 |Compute current                           |BT_NeuroElf_CM_compute1|    |center|      |       |       |      |     |         |
+        |Button     |$  130    0  -92    0 |Compute ...                               |BT_NeuroElf_CM_compute |    |center|      |       |       |      |     |         |
+        |           |                      |                                          |                       |    |      |      |       |       |      |     |         |
+---  END_UICONTROLS  ---

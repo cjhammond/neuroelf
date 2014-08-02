@@ -1,0 +1,587 @@
+---  BEGIN_COMMENTS  ---
+
+NeuroElf GUI
+
+Version:  0.9d
+Build:    14072417
+Date:     Jul-24 2014, 5:41 PM EST
+Figure:   NeuroElf main GUI window
+Author:   Jochen Weber
+Info:     Figure created for NeuroElf (main UI)
+
+% Copyright (c) 2010 - 2014, Jochen Weber
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in the
+%       documentation and/or other materials provided with the distribution.
+%     * Neither the name of Columbia University nor the
+%       names of its contributors may be used to endorse or promote products
+%       derived from this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+% ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+% WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+% DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+% (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+% ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+---   END_COMMENTS   ---
+
+--- BEGIN_VARIABLES  ---
+VarName |VarContent
+rgbbt   |]permute(uint8(cat(2, repmat([255; 0; 0], [1, 6, 12]), repmat([0; 255; 0], [1, 6, 12]), repmat([0; 0; 255], [1, 6, 12]))), [3, 2, 1])
+---  END_VARIABLES   ---
+
+---   BEGIN_FIGURE   ---
+Comment |Units |Visible|Position               |Title                               |Tag                          |Page|CallbackClReq
+        |pixels|off    |$   -1   -1  1000  696 |NeuroElf GUI                        |NeuroElf_MainFig             |$ 1 |neuroelf_gui('close');
+---    END_FIGURE    ---
+
+---    BEGIN_MENU    ---
+Comment |Level |Enabled |Checked |Separator |EGroups|VGroups|Caption     |Accelerator |Tag                          |Callback
+        |      |        |        |          |       |       |                       | |                             |
+Main menu ->
+
+  File ->
+        |$1    |        |        |          |       |       |&File                  | |UIM_NeuroElf_FILE            |
+        |$ 2   |        |        |          |       |       |Open...                |o|UIM_NeuroElf_openfile        |
+        |$ 2   |        |        |          |       |       |Open file as stats...  | |UIM_NeuroElf_openstatsfile   |
+        |$ 2   |        |        |on        |       |       |Select current object  | |UIM_NeuroElf_selectfile      |
+        |$ 2   |        |        |on        |       |       |Recently loaded slicing objects       | |UIM_NeuroElf_recentslice |
+        |$ 2   |        |        |          |       |       |Recently loaded slicing stats objects | |UIM_NeuroElf_recentstats |
+        |$ 2   |        |        |          |       |       |Recently loaded surface objects       | |UIM_NeuroElf_recentsrf   |
+        |$ 2   |        |        |          |       |       |Recently loaded surface stats objects | |UIM_NeuroElf_recentsrfst |
+        |$ 2   |        |        |on        |       |       |Colin-27 dataset       | |UIM_NeuroElf_opencolin       |
+        |$ 2   |        |        |on        |       |       |NeuroSynth maps        | |UIM_NeuroElf_neurosynth      |
+        |$ 2   |off     |        |on        |VarIsLoaded  | |Clone slicing object   | |UIM_NeuroElf_clonefile       |
+        |$ 2   |off     |        |          |VarIsLoaded  | |Close slicing object   | |UIM_NeuroElf_closefile       |
+        |$ 2   |        |        |          |       |       |New slicing object (empty VMR)||UIM_NeuroElf_newvmr    |
+        |$ 2   |off     |        |          |VarIsLoaded  | |Reload slicing object  | |UIM_NeuroElf_reloadfile      |
+        |$ 2   |off     |        |          |VarIsLoaded  | |Set underlay object    | |UIM_NeuroElf_setunderlay     |
+        |$ 2   |off     |        |on        |SLoaded      | |Clone stats object     | |UIM_NeuroElf_clonestats      |
+        |$ 2   |off     |        |          |SLoaded|       |Reload stats object    | |UIM_NeuroElf_reloadstats     |
+        |$ 2   |off     |        |on        |VarIsLoaded  | |Save                   |s|UIM_NeuroElf_savefile        |
+        |$ 2   |off     |        |          |VarIsLoaded  | |Save as...             | |UIM_NeuroElf_savefileas      |
+        |$ 2   |off     |        |on        |SLoaded|       |Save stats             | |UIM_NeuroElf_savestat        |
+        |$ 2   |off     |        |          |SLoaded|       |Save stats as...       | |UIM_NeuroElf_savestatas      |
+        |$ 2   |        |        |on        |       |       |Save text output (table/betas)...||UIM_NeuroElf_savetextas |
+        |$ 2   |off     |        |          |TCPlot |       |Save time course (SDM)...||UIM_NeuroElf_savetcsdm      |
+        |$ 2   |        |        |on        |       |       |Reload scenery file    |y|UIM_NeuroElf_reloadscene     |
+        |$ 2   |        |        |on        |       |       |Import Analyze to VMR...||UIM_NeuroElf_importvmr       |
+        |$ 2   |        |        |          |       |       |Import SPM maps to VMP...||UIM_NeuroElf_importvmp      |
+        |$ 2   |        |        |          |       |       |Import RFX-GLM from SPM.mat files...||UIM_NeuroElf_importrfxglm |
+        |$ 2   |        |        |on        |       |       |Close all files        | |UIM_NeuroElf_closeallfiles   |
+
+    File -> Options ->
+        |$ 2   |        |        |on        |       |       |Options                | |UIM_NeuroElf_OPTIONS         |
+        |$  3  |        |        |          |       |       |ClusterTable           | |UIM_NeuroElf_CTable          |
+        |$   4 |        |        |          |       |       |generate new VOI       | |UIM_NeuroElf_CTableNewVOI    |
+        |$   4 |        |        |          |       |       |add to existing VOI    | |UIM_NeuroElf_CTableAddToVOI  |
+        |$   4 |        |        |on        |       |       |extract only manually  | |UIM_NeuroElf_CTableExtManual |
+        |$   4 |        |        |          |       |       |extract on single select||UIM_NeuroElf_CTableExtSingle |
+        |$   4 |        |        |          |       |       |extract on multi-selection||UIM_NeuroElf_CTableExtMulti|
+        |$   4 |        |        |on        |       |       |extract with subject IDs||UIM_NeuroElf_CTableExtWithSID|
+        |$   4 |        |        |on        |       |       |separate value by spaces||UIM_NeuroElf_CTableExtSepSpc |
+        |$   4 |        |        |          |       |       |separate value by tabs | |UIM_NeuroElf_CTableExtSepTab |
+        |$   4 |        |        |          |       |       |separate value by commas||UIM_NeuroElf_CTableExtSepCom |
+        |$   4 |        |        |          |       |       |separate value by semicolons||UIM_NeuroElf_CTableExtSepSmc|
+        |$   4 |        |        |on        |       |       |peak coordinate        | |UIM_NeuroElf_CTablePeak      |
+        |$   4 |        |        |          |       |       |center coordinate      | |UIM_NeuroElf_CTableCenter    |
+        |$   4 |        |        |          |       |       |center-of-gravity      | |UIM_NeuroElf_CTableCOG       |
+        |$   4 |        |        |on        |       |       |print sub-cluster sizes| |UIM_NeuroElf_CTableSCSizes   |
+        |$   4 |        |        |on        |       |       |sort table by stats    | |UIM_NeuroElf_CTableSortMax   |
+        |$   4 |        |        |          |       |       |sort table by signed stats||UIM_NeuroElf_CTableSortMaxS|
+        |$   4 |        |        |          |       |       |sort table by cluster size||UIM_NeuroElf_CTableSortSize|
+        |$   4 |        |        |          |       |       |sort table by X coordinate||UIM_NeuroElf_CTableSortX   |
+        |$   4 |        |        |          |       |       |sort table by Y coordinate||UIM_NeuroElf_CTableSortY   |
+        |$   4 |        |        |          |       |       |sort table by Z coordinate||UIM_NeuroElf_CTableSortZ   |
+
+        |$  3  |        |        |          |       |       |Draw on event          | |UIM_NeuroElf_DOn             |
+        |$   4 |        |        |          |       |       |Mouse click or movement| |UIM_NeuroElf_DOnMouse        |
+        |$   4 |        |        |          |       |       |Set position by cursor | |UIM_NeuroElf_DOnCursor       |
+        |$   4 |        |        |          |       |       |Set position by coordinate||UIM_NeuroElf_DOnPosition   |
+        |$   4 |        |        |on        |       |       |Satellite browsing     | |UIM_NeuroElf_DOnSatellite    |
+        |$   4 |        |        |on        |       |       |Linked position update | |UIM_NeuroElf_DOnLinked       |
+
+        |$  3  |        |        |          |       |       |NeuroElf listener      | |UIM_NeuroElf_Listener        |
+        |$   4 |        |        |          |       |       |Start listener         | |UIM_NeuroElf_ListenerStart   |
+        |$   4 |off     |        |          |       |       |Stop listener          | |UIM_NeuroElf_ListenerStop    |
+        |$   4 |        |        |on        |       |       |Set listener folder    | |UIM_NeuroElf_ListenerFolder  |
+
+        |$  3  |        |        |          |       |       |Orientation            | |UIM_NeuroElf_Orient          |
+        |$   4 |        |        |          |       |       |neurological           | |UIM_NeuroElf_OrientNeuro     |
+        |$   4 |        |        |          |       |       |radiological           | |UIM_NeuroElf_OrientRadio     |
+
+        |$  3  |        |        |          |       |       |PLP-Lookup             | |UIM_NeuroElf_PLPLookup       |
+        |$   4 |        |        |          |       |       |On cursor position change||UIM_NeuroElf_PLPLUCursor    |
+        |$   4 |        |        |          |       |       |On cluster selection   | |UIM_NeuroElf_PLPLUCluster    |
+
+        |$  3  |        |        |          |       |       |Renderer               | |UIM_NeuroElf_Renderer        |
+        |$   4 |        |        |          |       |       |OpenGL                 | |UIM_NeuroElf_RendOpenGL      |
+        |$   4 |        |        |          |       |       |zbuffer                | |UIM_NeuroElf_Rendzbuffer     |
+
+        |$  3  |        |        |          |       |       |Spatial normalization  | |UIM_NeuroElf_SPMsn           |
+        |$   4 |        |        |          |       |       |Load *_sn.mat for slicing object   | |UIM_NeuroElf_SPMsnloadslv |
+        |$   4 |        |        |          |       |       |Set ICBM -> TAL for slicing object | |UIM_NeuroElf_SPMsnli2tslv |
+        |$   4 |        |        |          |       |       |Set TAL -> ICBM for slicing object | |UIM_NeuroElf_SPMsnlt2islv |
+        |$   4 |        |        |          |       |       |Unload *_sn.mat for slicing object | |UIM_NeuroElf_SPMsnunldslv |
+        |$   4 |        |        |on        |       |       |Load *_sn.mat for stats object     | |UIM_NeuroElf_SPMsnloadstv |
+        |$   4 |        |        |          |       |       |Set ICBM -> TAL for stats object   | |UIM_NeuroElf_SPMsnli2tstv |
+        |$   4 |        |        |          |       |       |Set TAL -> ICBM for stats object   | |UIM_NeuroElf_SPMsnlt2istv |
+        |$   4 |        |        |          |       |       |Unload *_sn.mat for stats object   | |UIM_NeuroElf_SPMsnunldstv |
+
+        |$  3  |        |        |          |       |       |Surface view options   | |UIM_NeuroElf_SurfOpt         |
+        |$   4 |        |        |          |       |       |Set background color... ||UIM_NeuroElf_SOBackColor     |
+        |$   4 |        |        |          |       |       |Set reconstruction colors... ||UIM_NeuroElf_SORecoColors |
+        |$   4 |        |        |on        |       |       |Reconstruct largest cluster only ||UIM_NeuroElf_SORecoOneSurf |
+        |$   4 |        |        |          |       |       |Use 4 triangles per surface ||UIM_NeuroElf_SOReco4TPS  |
+        |$   4 |        |        |on        |       |       |Reuse existing SSM/TSM mapping files ||UIM_NeuroElf_SOReuseXSMMapping |
+
+        |$  3  |        |        |on        |       |       |Grayscale colors (LUT) | |UIM_NeuroElf_GLUTList        |
+        |$   4 |        |        |          |       |       |Default (black to white)||UIM_NeuroElf_GLUT_bw         |
+        |$   4 |        |        |          |       |       |Inverse (white to black)||UIM_NeuroElf_GLUT_wb         |
+        |$   4 |        |        |on        |       |       |Black-white-black      | |UIM_NeuroElf_GLUT_bwb        |
+        |$   4 |        |        |          |       |       |Two black-white-black bands||UIM_NeuroElf_GLUT_bwbwb   |
+        |$   4 |        |        |          |       |       |White-black-white      | |UIM_NeuroElf_GLUT_wbw        |
+        |$   4 |        |        |          |       |       |Color wheel            | |UIM_NeuroElf_GLUT_color      |
+
+        |$  3  |        |        |          |       |       |Stats Colors (LUT)     | |UIM_NeuroElf_LUTList         |
+        |$  3  |        |        |          |       |       |Edit LUT palette       | |UIM_NeuroElf_LUTEdit         |
+
+        |$  3  |        |        |on        |       |       |Underlay blending mode | |UIM_NeuroElf_ULayBlend       |
+        |$   4 |        |        |          |       |       |Overlay wins           | |UIM_NeuroElf_ULayBlendOLay   |
+        |$   4 |        |on      |          |       |       |Overlay favored        | |UIM_NeuroElf_ULayBlendOLayF  |
+        |$   4 |        |        |          |       |       |Overlay weighted       | |UIM_NeuroElf_ULayBlendOLayW  |
+        |$   4 |        |        |          |       |       |Equal mixing           | |UIM_NeuroElf_ULayBlendMix    |
+        |$   4 |        |        |          |       |       |Underlay weighted      | |UIM_NeuroElf_ULayBlendULayW  |
+        |$   4 |        |        |          |       |       |Underlay favored       | |UIM_NeuroElf_ULayBlendULayF  |
+        |$   4 |        |        |          |       |       |Underlay wins          | |UIM_NeuroElf_ULayBlendULay   |
+
+        |$  3  |        |off     |on        |       |       |Create new VMR in 0.5mm resolution | |UIM_NeuroElf_VMRRes05 |
+        |$  3  |        |off     |          |       |       |Extended map names in list| |UIM_NeuroElf_ExtMapNames  |
+        |$  3  |        |off     |          |       |       |Linked browsing with satellites| |UIM_NeuroElf_LinkedBrowse|
+        |$  3  |        |off     |          |       |       |Maximum distant color for 2 joined stats maps||UIM_NeuroElf_StatsJoinMaxDist|
+        |$  3  |        |off     |          |       |       |Show stats thresh bars | |UIM_NeuroElf_ShowThreshBars  |
+        |$  3  |        |off     |          |       |       |Echo function call/methods| |UIM_NeuroElf_EchoCalls    |
+
+  File -> (... continued)
+        |$ 2   |        |        |on        |       |       |Exit                   |x|UIM_NeuroElf_CloseUI         |
+
+  Study ->
+c        |$1    |        |        |          |       |       |&Study                 | |UIM_NeuroElf_STUDY           |
+c        |$ 2   |        |        |          |       |       |Open study...          | |UIM_NeuroElf_openstudy       |
+c        |$ 2   |        |        |          |       |       |Create study...        | |UIM_NeuroElf_createstudy     |
+c        |$ 2   |        |        |          |       |       |Study configuration... | |UIM_NeuroElf_configstudy     |
+c        |$ 2   |        |        |on        |       |       |Import subject(s)...   | |UIM_NeuroElf_studyimport     |
+c        |$ 2   |        |        |          |       |       |Preprocess subjects... | |UIM_NeuroElf_studyprepro     |
+
+  FMR ->
+        |$1    |        |        |          |       |FMRMenu|FMR                    | |UIM_NeuroElf_FMR             |
+c        |$ 2   |        |        |          |       |       |Create AMR             | |UIM_NeuroElf_FMRCreateAMR    |
+        |$ 2   |        |        |          |       |       |Create time-course movie... | |UIM_NeuroElf_FMRTCMovie |
+        |$ 2   |        |        |          |       |       |Export to Nifti        | |UIM_NeuroElf_FMRExportNII    |
+c        |$ 2   |        |        |          |       |       |Preprocess...          | |UIM_NeuroElf_FMRPreprocess   |
+
+  VMR ->
+        |$1    |        |        |          |       |VMRMenu|VMR                    | |UIM_NeuroElf_VMR             |
+        |$ 2   |        |        |          |       |       |Border reconstruction  | |UIM_NeuroElf_VMRDBReco       |
+        |$ 2   |        |        |          |       |       |Border-to-Sphere-SRF   | |UIM_NeuroElf_VMRDBRecoSPH    |
+        |$ 2   |        |        |          |       |       |Clean VMR              | |UIM_NeuroElf_VMRCleanVMR     |
+        |$ 2   |        |        |          |       |       |Correct inhomogeneity  | |UIM_NeuroElf_VMRInhomogen    |
+c        |$ 2   |        |        |          |       |       |Peel brain             | |UIM_NeuroElf_VMRPeelBrain   |
+        |$ 2   |off     |        |          |       |       |Recompute 8bit from 16bit| |UIM_NeuroElf_VMRLimitVMR   |
+c        |$ 2   |        |        |          |       |       |Rescale to 0.5mm       | |UIM_NeuroElf_VMRHiResResc   |
+        |$ 2   |        |        |          |       |       |Smooth VMR             | |UIM_NeuroElf_VMRSmoothData   |
+        |$ 2   |        |        |on        |       |       |Export to Nifti        | |UIM_NeuroElf_VMRExportNII    |
+        |$ 2   |        |        |          |       |       |Export as RGB Nifti    | |UIM_NeuroElf_VMRExportRGB    |
+
+  VTC ->
+        |$1    |        |        |          |       |VTCMenu|VTC                    | |UIM_NeuroElf_VTC             |
+        |$ 2   |        |        |          |       |       |Create time-course movie... | |UIM_NeuroElf_VTCTCMovie |
+        |$ 2   |        |        |          |       |       |Mask with VMR          | |UIM_NeuroElf_VTCMaskWithVMR  |
+        |$ 2   |        |        |          |       |       |Mean/Standard dev. maps| |UIM_NeuroElf_VTCMeanStd      |
+        |$ 2   |        |        |on        |       |       |Export to Nifti        | |UIM_NeuroElf_VTCExportNII    |
+
+  GLM ->
+        |$1    |        |        |          |       |GLMMenu|GLM                    | |UIM_NeuroElf_GLM             |
+        |$ 2   |        |        |          |       |       |Beta/scatter plot      | |UIM_NeuroElf_GLMBetaPlot     |
+        |$ 2   |        |        |          |       |       |Generate MDM...        | |UIM_NeuroElf_GLMGenerateMDM  |
+c        |$ 2   |        |        |          |       |       |Join RFX GLMs...       | |UIM_NeuroElf_GLMJoinRFX      |
+        |$ 2   |        |        |          |       |       |Mask with VMR          | |UIM_NeuroElf_GLMMaskWithVMR  |
+        |$ 2   |        |        |          |       |       |Threshold multiple maps| |UIM_NeuroElf_GLMThreshMaps   |
+        |$ 2   |        |        |on        |       |       |Export GLM to Nifti    | |UIM_NeuroElf_GLMExportNII    |
+        |$ 2   |        |        |on        |       |       |Select conditions for export | |UIM_NeuroElf_GLMSelXConds |
+
+  VMP ->
+        |$1    |        |        |          |       |VMPMenu|VMP                    | |UIM_NeuroElf_VMP             |
+        |$ 2   |        |        |          |       |       |Apply FDR...           | |UIM_NeuroElf_VMPApplyFDR     |
+        |$ 2   |        |        |          |       |       |Thresholding           | |UIM_NeuroElf_VMPOPTThresh    |
+        |$  3  |        |        |          |       |       |Use raw thresholds     | |UIM_NeuroElf_VMPOPTRawThresh |
+        |$  3  |        |        |          |       |       |Use plain FDR thresholds||UIM_NeuroElf_VMPOPTFDRIndPos |
+        |$  3  |        |        |          |       |       |Use non-parametric FDR thresholds | |UIM_NeuroElf_VMPOPTFDRNonPar |
+        |$  3  |off     |        |on        |       |       |Apply SVC with ... (requires smoothness estimate) ||UIM_NeuroElf_VMPSVCItems |
+        |$  3  |off     |        |          |       |       |  selected clusters    | |UIM_NeuroElf_VMPSVCVOI     |
+        |$  3  |off     |        |          |       |       |  mask object          | |UIM_NeuroElf_VMPSVCMask      |
+        |$  3  |off     |        |          |       |       |  current slicing object||UIM_NeuroElf_VMPSVCVMR       |
+        |$  3  |off     |        |          |       |       |  Colin brain          | |UIM_NeuroElf_VMPSVCColin     |
+        |$ 2   |        |        |on        |       |       |Combine VMPs...        | |UIM_NeuroElf_VMPCombine      |
+        |$ 2   |        |        |          |       |       |Compute formula...     | |UIM_NeuroElf_VMPCompFormula  |
+        |$ 2   |        |        |          |       |       |Create MSK...          | |UIM_NeuroElf_VMPCreateMSK    |
+        |$ 2   |        |        |          |       |       |Create SMP...          | |UIM_NeuroElf_VMPCreateSMP    |
+        |$ 2   |        |        |          |       |       |Export maps to Analyze | |UIM_NeuroElf_VMPWriteAna     |
+        |$ 2   |        |        |          |       |       |Mask with VMR          | |UIM_NeuroElf_VMPMaskWithVMR  |
+        |$ 2   |        |        |          |       |       |Mask with VOI clusters | |UIM_NeuroElf_VMPMaskWithCls  |
+        |$ 2   |        |        |          |       |       |Smooth selected maps   | |UIM_NeuroElf_VMPSmoothMaps   |
+        |$ 2   |        |        |          |       |       |Threshold multiple maps| |UIM_NeuroElf_VMPThreshMaps   |
+        |$ 2   |        |        |on        |       |       |Export VMP to Nifti    | |UIM_NeuroElf_VMPExportNII    |
+        |$ 2   |        |        |on        |SngVMP |       |Invoke GLM beta plotter| |UIM_NeuroElf_VMPBetaPlot     |
+
+  SRF ->
+        |$1    |        |        |          |       |SRFMenu|SRF                    | |UIM_NeuroElf_SRF             |
+        |$ 2   |        |        |          |       |       |Save current surface   | |UIM_NeuroElf_SRFSave         |
+        |$ 2   |        |        |          |       |       |Save current surface as... | |UIM_NeuroElf_SRFSaveAs   |
+        |$ 2   |        |        |on        |       |       |Clone surface          | |UIM_NeuroElf_SRFClone        |
+        |$ 2   |        |        |          |       |       |Create surface from cluster table | |UIM_NeuroElf_SRFClusterSRF |
+        |$ 2   |        |        |          |       |       |New surface (sphere)   | |UIM_NeuroElf_SRFNewSphere    |
+        |$ 2   |        |        |          |       |       |Reload from disk       | |UIM_NeuroElf_SRFReload       |
+c        |$ 2   |        |        |          |       |       |Combine surfaces...    | |UIM_NeuroElf_SRFCombine      |
+        |$ 2   |        |        |on        |       |       |Morph sphere to edges of current slicing object... | |UIM_NeuroElf_SRFMorphToS |
+        |$ 2   |        |        |          |       |       |Find intensity in current slicing object... | |UIM_NeuroElf_SRFMorphTo |
+        |$ 2   |        |        |on        |       |       |General morph...       | |UIM_NeuroElf_SRFGMorph       |
+        |$ 2   |        |        |          |       |       |Smooth...              | |UIM_NeuroElf_SRFSmooth       |
+        |$ 2   |        |        |          |       |       |Inflate...             | |UIM_NeuroElf_SRFInflate      |
+        |$ 2   |        |        |          |       |       |Morph to sphere...     | |UIM_NeuroElf_SRFSphere       |
+        |$ 2   |        |        |on        |       |       |Create curvature SMP...| |UIM_NeuroElf_SRFCurvSMP      |
+        |$ 2   |        |        |          |       |       |Create density SMP...  | |UIM_NeuroElf_SRFDensSMP      |
+        |$ 2   |        |        |on        |       |       |Set colors...          | |UIM_NeuroElf_SRFSetColors    |
+        |$ 2   |        |        |          |       |       |Set morph target...    | |UIM_NeuroElf_SRFSetMorphT    |
+        |$ 2   |        |        |on        |       |       |Print surface info     | |UIM_NeuroElf_SRFPrintInfo    |
+
+    SRF Viewpoint ->
+        |$ 2   |        |        |on        |       |       |Viewpoint              | |UIM_NeuroElf_SRFVIEW         |
+        |$  3  |        |        |          |       |       |Left lateral           | |UIM_NeuroElf_SRFLeftView     |
+        |$  3  |        |        |          |       |       |Right lateral          | |UIM_NeuroElf_SRFRightView    |
+        |$  3  |        |        |on        |       |       |Frontal                | |UIM_NeuroElf_SRFFrontView    |
+        |$  3  |        |        |          |       |       |Occipital              | |UIM_NeuroElf_SRFOcciView     |
+        |$  3  |        |        |on        |       |       |Superior               | |UIM_NeuroElf_SRFSuperView    |
+        |$  3  |        |        |          |       |       |Inferior               | |UIM_NeuroElf_SRFInferView    |
+
+  SMP ->
+        |$1    |        |        |          |       |SMPMenu|SMP                    | |UIM_NeuroElf_SMP             |
+        |$ 2   |        |        |          |       |       |Save SMP               | |UIM_NeuroElf_SMPSave         |
+        |$ 2   |        |        |          |       |       |Save SMP as...         | |UIM_NeuroElf_SMPSaveAs       |
+        |$ 2   |        |        |on        |       |       |Clone SMP              | |UIM_NeuroElf_SMPClone        |
+        |$ 2   |        |        |          |       |       |Reload SMP from disk   | |UIM_NeuroElf_SMPReload       |
+        |$ 2   |        |        |on        |       |       |Combine SMPs...        | |UIM_NeuroElf_SMPCombine      |
+        |$ 2   |        |        |          |       |       |Compute formula...     | |UIM_NeuroElf_SMPCompFormula  |
+        |$ 2   |        |        |          |       |       |Smooth selected maps   | |UIM_NeuroElf_SMPSmooth       |
+
+  HDR ->
+        |$1    |        |        |          |       |HDRMenu|HDR                    | |UIM_NeuroElf_HDR             |
+        |$ 2   |off     |        |          |VIsTemp|       |Create time-course movie... | |UIM_NeuroElf_HDRTCMovie |
+        |$ 2   |        |        |          |       |       |Segment head using SPM | |UIM_NeuroElf_HDRSegmentHead  |
+        |$ 2   |        |        |          |       |       |Toggle oblique slicing | |UIM_NeuroElf_HDRObliqueSlc   |
+        |$ 2   |off     |        |on        |VHasBVs|       |DTI                    | |UIM_NeuroElf_HDRDTISubMenu   |
+        |$  3  |        |        |          |       |       |Perform 3-parameter, 2-pass motion correction | |UIM_NeuroElf_HDRDTI3p2pMC |
+        |$  3  |        |        |on        |       |       |Compute DTI tensor and eigenvectors from DWI data | |UIM_NeuroElf_HDRDTIDTCalc |
+        |$  3  |        |        |          |       |       |Flip BVecs in X-direction | |UIM_NeuroElf_HDRDTIFlipBVX |
+        |$  3  |        |        |          |       |       |Flip BVecs in Y-direction | |UIM_NeuroElf_HDRDTIFlipBVY |
+        |$  3  |        |        |          |       |       |Flip BVecs in Z-direction | |UIM_NeuroElf_HDRDTIFlipBVZ |
+        |$  3  |off     |        |on        |       |       |Track fibers using first eigenvectors | |UIM_NeuroElf_HDRDTIFibTrack |
+
+  Stats ->
+        |$1    |        |        |          |       |       |Statistics             | |UIM_NeuroElf_STATS           |
+
+  Analysis ->
+        |$1    |        |        |          |       |       |&Analysis              | |UIM_NeuroElf_ANALYSIS        |
+        |$ 2   |        |        |          |       |       |Compute multi-study GLM|g|UIM_NeuroElf_runmdm          |
+        |$ 2   |        |        |          |       |       |Contrast manager       |c|UIM_NeuroElf_contrasts       |
+        |$ 2   |        |        |          |       |       |Preprocess VTCs for FC | |UIM_NeuroElf_fcprepro        |
+        |$ 2   |        |        |          |       |       |Single-level RFX mediation|d|UIM_NeuroElf_rfxmediation |
+        |$ 2   |        |        |on        |       |       |ECG Heart-rate data analysis|e|UIM_NeuroElf_hrv        |
+c        |$ 2   |        |        |          |       |       |GSR peak-to-peak analysis| |UIM_NeuroElf_gsrp2p        |
+        |$ 2   |        |        |on        |       |       |Meta Analysis          | |UIM_NeuroElf_MKDA            |
+
+  Drawing tools ->
+        |$1    |        |        |on        |       |DrawMenu|Drawing               | |UIM_NeuroElf_DRAWING         |
+        |$ 2   |        |        |          |       |       |Histogram of marked voxels||UIM_NeuroElf_DrawHistMark  |
+        |$ 2   |        |        |          |       |       |Load Undo-Buffer...    | |UIM_NeuroElf_DrawLoadUBuff   |
+        |$ 2   |        |        |          |       |       |Sample Undo-Buffer from Underlay... | |UIM_NeuroElf_DrawSmpULay |
+
+  Visualization ->
+        |$1    |        |        |          |       |       |&Visualization         | |UIM_NeuroElf_VISUAL          |
+        |$2    |        |        |          |       |       |Create montage images  |i|UIM_NeuroElf_VisMontage      |
+        |$2    |        |        |          |       |       |Create rendered images |r|UIM_NeuroElf_Render          |
+        |$2    |        |        |on        |       |       |Create VOI condition plots | |UIM_NeuroElf_VOICondAvg  |
+        |$2    |        |        |          |       |       |Reload VOI condition plots | |UIM_NeuroElf_VOICondAvgLoad|
+        |$2    |off     |        |on        |       |       |Show fibers from selected VOI ||UIM_NeuroElf_DTIPlotFib |
+
+  Cluster/VOI tools ->
+        |$1    |        |        |          |       |       |VOI                    | |UIM_NeuroElf_VOI             |
+
+  External tools ->
+        |$1    |        |        |          |       |       |&Tools                 | |UIM_NeuroElf_TOOLS           |
+
+    External tools -> Quality assessment
+        |$2    |        |        |          |       |       |Quality assessment     | |UIM_NeuroElf_TOOLS_QA        |
+        |$3    |        |        |          |       |       |Assess fMRI quality... | |UIM_NeuroElf_fmriquality     |
+        |$3    |        |        |          |       |       |Create averaged-volumes VTC... | |UIM_NeuroElf_QCVTC   |
+        |$3    |        |        |          |       |       |Create global MDM-based timecourse... | |UIM_NeuroElf_QCglobtc |
+        |$3    |        |        |          |       |       |Visualize SPM motion params... | |UIM_NeuroElf_visspmrp|
+
+    External tools -> SPM-to-BV conversion
+        |$2    |        |        |          |       |       |SPM -> BV conversion...| |UIM_NeuroElf_TOOLS_SPM2BV    |
+        |$3    |        |        |          |       |       |SPM.mat -> PRT(s)...   | |UIM_NeuroElf_SPM2PRT         |
+        |$3    |        |        |          |       |       |SPM.mat -> SDM(s)...   | |UIM_NeuroElf_SPM2SDM         |
+
+  External tools -> (... continued)
+        |$2    |        |        |on        |       |       |alphasim...            | |UIM_NeuroElf_alphasim        |
+        |$2    |        |        |          |       |       |Average anatomicals... | |UIM_NeuroElf_averagenii      |
+        |$2    |        |        |          |       |       |Rename DICOM files...  | |UIM_NeuroElf_renamedicom     |
+        |$2    |        |        |          |       |       |SPM preprocessing...   |p|UIM_NeuroElf_spmx_prepro     |
+        |$2    |        |        |          |       |       |tdclient...            |t|UIM_NeuroElf_tdclient        |tdclient('visual');
+
+  Help menu ->
+        |$1    |        |        |          |       |       |Help                   | |UIM_NeuroElf_HELP            |
+        |$2    |        |        |          |       |       |About NeuroElf GUI...  | |UIM_NeuroElf_about           |
+---     END_MENU     ---
+
+--- BEGIN_UICONTROLS ---
+Comment |Type       |Position              |Caption                                 |Tag|FontName|FontSize|MinMaxTop|SliderStep|Value|HAlign|VAlign|Enabled|EGroups|Visible|VGroups|Page|RGroup|ColorFG|ColorBG|ToolTip|Callback
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+file/map selection| |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Label      |$   12  672  116   16 |Loaded objects:                         |                       ||    |           ||     |left  |      |       |       |       |       |    |      ||||
+        |DropDown   |$  118    0  240  -20 |empty                                   |DD_NeuroElf_varlist    ||$ 9 |           ||     |left  |      |       |       |       |       |$1 2 4|    ||||
+        |DropDown   |$    0    0    0    0 |empty                                   |DD_NeuroElf_varlistsrf ||$ 9 |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Button     |$  248    0  -20    0 |]neuroelf_file('i', 'trans')            |BT_NeuroElf_slvartrf   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Set orientation for slice-based object|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'trans')            |BT_NeuroElf_surfvartrf ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Set orientation for surface object|
+        |Button     |$   24    0    0    0 |x                                       |BT_NeuroElf_varclose   ||$ 8 |           ||     |      |      |       |       |       |       |$1 2 4|    |||Unload slicing object from NeuroElf GUI|
+        |Button     |$    0    0    0    0 |x                                       |BT_NeuroElf_varclosesrf||$ 8 |           ||     |      |      |       |       |       |       |$ 3 |      |||Unload surface object from NeuroElf GUI|
+        |Label      |$ -390  -30  116  -16 |Available statistics:                   |                       ||    |           ||     |left  |      |       |       |       |       |    |      ||||
+        |Label      |$    0  -30    0    0 |Available maps:                         |                       ||    |           ||     |left  |      |       |       |       |       |    |      ||||
+        |DropDown   |$  118   30  240  -20 |empty                                   |DD_NeuroElf_statlist   ||$ 9 |           ||     |left  |      |off    |SLoaded|       |       |$1 2 4|    ||||
+        |DropDown   |$    0    0    0    0 |empty                                   |DD_NeuroElf_statlistsrf||$ 9 |           ||     |left  |      |off    |SLoadSR|       |       |$ 3 |      ||||
+        |DropDown   |$    0  -24    0    0 |Inspect VTC file...                     |DD_NeuroElf_statsref   ||$ 9 |           ||     |left  |      |off    |SLoaded|       |       |$1 2 4|    ||||
+        |DropDown   |$    0    0    0    0 |Inspect MTC file...                     |DD_NeuroElf_statsrefsrf||$ 9 |           ||     |left  |      |off    |SLoadSR|       |       |$ 3 |      ||||
+        |Button     |$  248   24  -20    0 |]neuroelf_file('i', 'trans')            |BT_NeuroElf_stvartrf   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Set orientation for slice-based statistics object|
+        |Button     |$   24    0    0    0 |x                                       |BT_NeuroElf_statclose  ||$ 8 |           ||     |      |      |off    |SLoaded|       |       |$1 2 4|    |||Unload statistical map object from NeuroElf GUI|
+        |Button     |$    0    0    0    0 |x                                       |BT_NeuroElf_statclossrf||$ 8 |           ||     |      |      |off    |SLoadSR|       |       |$ 3 |      |||Unload statistical map object from NeuroElf GUI|
+        |Toggle     |$  -24  -24    0    0 |]neuroelf_file('i', 'plot')             |BT_NeuroElf_statsrefreg||    |           ||$1   |      |      |       |       |       |       |    |      |||Show regressors of referenced study|
+        |Toggle     |$   24    0    0    0 |]neuroelf_file('i', 'ixx')              |BT_NeuroElf_statsrefixx||    |           ||     |      |      |       |       |       |       |    |      |||Regress out effects of no interest (nuisance)|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |ListBox    |$ -390 -200  386 -190 |none                                    |LB_NeuroElf_statmaps   ||$ 9 |$[1, 3, 1] ||     |left  |      |off    |SSelect|       |       |$1 2 4|    ||||
+        |ListBox    |$    0    0    0    0 |none (fitting the current surface)      |LB_NeuroElf_statmapssrf||$ 9 |$[1, 3, 1] ||     |left  |      |off    |SSeleSR|       |       |$ 3 |      ||||
+        |Button     |$  390  170   20  -20 |]neuroelf_file('i', 'up')               |BT_NeuroElf_statmup    ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Move selected maps up in list|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'up')               |BT_NeuroElf_srfsmup    ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Move selected maps up in list|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'down')             |BT_NeuroElf_statmdown  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Move selected maps down in list|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'down')             |BT_NeuroElf_srfsmdown  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Move selected maps down in list|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'props')            |BT_NeuroElf_statprops  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Set map properties (name, type, DF1/2)|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'props')            |BT_NeuroElf_srfsprops  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Set map properties (name, type, DF1/2)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'trash')            |BT_NeuroElf_statmdel   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Delete currently selected maps from object|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'trash')            |BT_NeuroElf_srfsmdel   ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Delete currently selected maps from object|
+        |Button     |$    0  -38    0    0 |]neuroelf_file('i', 'f')                |BT_NeuroElf_statmcfrm  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Compute formula for current VMP|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'f')                |BT_NeuroElf_srfmcfrm   ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Compute formula for current SMP|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'smp')              |BT_NeuroElf_statmcsmp  ||    |           ||     |      |      |       |       |       |       |$1 2 3 4|  |||Create SMP from selected stats maps|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'bars')             |BT_NeuroElf_statbars   ||    |           ||     |      |      |       |SLdNVMP|       |       |$1 2 4|    |||Invoke GLM beta plotter with referenced settings|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'smoost')           |BT_NeuroElf_smoothsmp  ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Smooth currently select SMP maps|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'ellipse')          |BT_NeuroElf_statmproj  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Set selected maps for all subjects|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'ellipse')          |BT_NeuroElf_srfsmproj  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Set selected maps for all subjects|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Label      |$ -390  -24  116  -16 |Clusters/VOIs:                          |                       ||    |           ||     |left  |      |       |       |       |       |$1 2 4|    ||||
+        |Label      |$    0    0    0    0 |Clusters/POIs:                          |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |ListBox    |$    0 -222  386 -218 |                                        |LB_NeuroElf_clusters   ||$ 9 |$[1, 3, 1] ||     |left  |      |       |       |       |       |$1 2 4|    ||||
+        |ListBox    |$    0    0    0    0 |                                        |LB_NeuroElf_Srfclust   ||$ 9 |$[1, 3, 1] ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Button     |$  390  199   20  -20 |]neuroelf_file('i', 'mroi')             |BT_NeuroElf_clustmark  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Mark voxels in selected VOI(s) in current VMR|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'sphere')           |BT_NeuroElf_clustsph   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Restrict selected clusters to sphere around peak (first) voxel|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'atl')              |BT_NeuroElf_clustatl   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Add cluster from (Talairach) atlas to list|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'gotor')            |BT_NeuroElf_clustgoto  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Goto location of nearest cluster peak/center|
+        |Toggle     |$    0  -22    0    0 |]neuroelf_file('i', 'zoom')             |BT_NeuroElf_clustzoom  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Zoom to current cluster|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'props')            |BT_NeuroElf_clustprop  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Cluster properties...|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'trash')            |BT_NeuroElf_clustmdel  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Delete currently selected regions from VOI object|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'folder')           |BT_NeuroElf_clustload  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Load clusters/VOI definitions VOI file|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'disk')             |BT_NeuroElf_clustsave  ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Save current clusters/VOI definitions as VOI file|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'table')            |BT_NeuroElf_clustbet   ||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Extract betas from selected clusters|
+        |Button     |$    0   88    0    0 |]neuroelf_file('i', 'props')            |BT_NeuroElf_Srfclprop  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||POI properties...|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'trash')            |BT_NeuroElf_Srfclmdel  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Delete currently selected patches from POI object|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'folder')           |BT_NeuroElf_Srfclload  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Load clusters/POI definitions POI file|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'disk')             |BT_NeuroElf_Srfclsave  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Save current clusters/POI definitions as POI file|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'table')            |BT_NeuroElf_Srfclbet   ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Extract betas from selected POI clusters|
+        |MultiEdit  |$ -390 -133  408 -126 |Cluster table/beta extracts...          |ED_NeuroElf_clusters   |FixedWidth |$ 9 |||     |left  |      |       |SSelect|       |       |    |      ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |XProgress  |$    0  -28    0  -20 |x: NeuroElf GUI progress                |PB_NeuroElf_mainpbar   ||$ 10| |$[1, 20]  |     |left  |      |off    |       |       |       |    |      |$ 0.9 0.3 0.2 |$ 0.6 0.1 0.1 ||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Frame      |$  426    4    1  688 |                                        |FR_NeuroElf_vertdivide ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Button     |$    6  668   20  -20 |]neuroelf_file('i', 'chair')            |BT_NeuroElf_draw0      ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Cursor mode only (no drawing)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'paint')            |BT_NeuroElf_draw2d     ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||2-D drawing mode (circle or square)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'paint3')           |BT_NeuroElf_draw3d     ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||3-D drawing mode (sphere or cube)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'flood')            |BT_NeuroElf_flood3     ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Fill color range with other color/code|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'xpand')            |BT_NeuroElf_expand3    ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Expand marking into range|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'smooa')            |BT_NeuroElf_smoothana  ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Smooth volume|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'smoos')            |BT_NeuroElf_smoothseg  ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Smooth marking|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'smoob')            |BT_NeuroElf_smoothwbrd ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Smooth within borders|
+        |Toggle     |$    0  -22    0    0 |]neuroelf_file('i', 'paintu')           |BT_NeuroElf_drawu      ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Undo painter (gets data back from original buffer)|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$1 2|      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'tick')             |BT_NeuroElf_drawok     ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Copy current buffer into original buffer (accept changes)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'back')             |BT_NeuroElf_drawback   ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Copy original buffer back to current buffer (revert changes)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'reload')           |BT_NeuroElf_drawreld   ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Reload VMR from disk (revert all changes)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'mskvmr')           |BT_NeuroElf_drawmask   ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Reload voxels marked in current color code (mask)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'invmsk')           |BT_NeuroElf_drawimask  ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Reload all voxel not marked in current color code (inverse mask)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'roi')              |BT_NeuroElf_mark2roi   ||    |           ||     |      |      |off    |SVIsVMR|       |       |$1 2|      |||Create ROI with from marked voxels|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'ulay')             |BT_NeuroElf_setulay    ||    |           ||     |      |      |off    |VarIsLoaded |  |       |$1 2|      |||Set underlay object|
+        |Toggle     |$    0  -22    0    0 |]neuroelf_file('i', 'v16')              |BT_NeuroElf_showv16    ||    |           ||     |      |      |off    |       |       |       |$1 2|      |||Show VMRData16 data for VMRs (if available)|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Button     |$    0  355    0  -20 |]neuroelf_file('i', 'nsph')             |BT_NeuroElf_newsphere  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Create new sphere|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'hmesh')            |BT_NeuroElf_headmesh   ||    |           ||     |      |      |       |VarIsLoaded|   |       |$ 3 |      |||Create head mesh|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'bordq')            |BT_NeuroElf_morphto    ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Find intensity in selected slicing object|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'smoob')            |BT_NeuroElf_smoothsrf  ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Smooth surface|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'isrf')             |BT_NeuroElf_inflatesrf ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Inflate surface|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'ssrf')             |BT_NeuroElf_tospheresrf||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Morph surface to sphere|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'ico')              |BT_NeuroElf_maptoico   ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Map spherically morphed surface to icosahedron mesh|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'stop')             |BT_NeuroElf_stopmorph  ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Stop morphing|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'back')             |BT_NeuroElf_srfundomrp ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Undo last morphing operation|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'reload')           |BT_NeuroElf_srfreload  ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Reload surface from disk (revert all changes)|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'disk')             |BT_NeuroElf_srfsave    ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Save surface (as)|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'msrf')             |BT_NeuroElf_backprojsrf||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Backproject selected SRF into current VMR|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]tfgtv.rgbbt                            |BT_NeuroElf_srfcolors  ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Set pair of SRF basic colors|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'info')             |BT_NeuroElf_srfinfo    ||    |           ||     |      |      |       |SLoadSR|       |       |$ 3 |      |||Print some information about the surface into the console|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Button     |$  544  299    0  -20 |]neuroelf_file('i', 'undock')           |BT_NeuroElf_undock     ||    |           ||     |      |      |       |       |       |       |    |      |||Copy current view (anatomical + functional) to satellite window|
+        |Toggle     |$    0  -22    0    0 |]neuroelf_file('i', 'link')             |BT_NeuroElf_togglelink ||    |           ||     |      |      |       |       |       |       |    |      |||Toggle linked/unlinked browsing|
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'mini')             |BT_NeuroElf_minimize   ||    |           ||     |      |      |       |       |       |       |    |      |||Remove controls and only show axes view|
+        |Button     |$    0    0    0    0 |]neuroelf_file('i', 'maxi')             |BT_NeuroElf_maximize   ||    |           ||     |      |      |       |       |off    |       |    |      |||Show the full dialog with controls|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'sct')              |BT_NeuroElf_viewsct    ||    |           ||     |      |      |       |       |       |       |    |      |||Show the three canonical slices (SAG, COR, TRA) in one view|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'sag')              |BT_NeuroElf_viewsag    ||    |           ||     |      |      |       |       |       |       |    |      |||Show only the SAG (sagittal) slicing|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'cor')              |BT_NeuroElf_viewcor    ||    |           ||     |      |      |       |       |       |       |    |      |||Show only the COR (coronal) slicing|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'tra')              |BT_NeuroElf_viewtra    ||    |           ||     |      |      |       |       |       |       |    |      |||Show only the TRA (transversal / axial) slicing|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'trans')            |BT_NeuroElf_viewtrf    ||    |           ||     |      |      |       |       |       |       |    |      |||Set (display-only) free-form transformation values|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'surf')             |BT_NeuroElf_viewsrf    ||    |           ||     |      |      |       |       |       |       |    |      |||Show the surface/scenery display|
+        |Frame      |$    0   -3    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -22    0  -20 |]neuroelf_file('i', 'rend')             |BT_NeuroElf_render     ||    |           ||     |      |      |       |       |       |       |    |      |||Render anatomical and stats dataset in 3D|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+3 oblique slicing | |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |XImage     |$  456  432  256  256 |]zeros(256,256)                         |IM_NeuroElf_Slice_SAG  ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |XAxes      |$    0    0 -256    0 |                                        |AX_NeuroElf_Slice_SAG  ||    |           ||     |      |      |       |       |off    |       |    |      ||||
+        |XImage     |$  260    0    0    0 |]zeros(256,256)                         |IM_NeuroElf_Slice_COR  ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |XAxes      |$    0    0 -256    0 |                                        |AX_NeuroElf_Slice_COR  ||    |           ||     |      |      |       |       |off    |       |    |      ||||
+        |XImage     |$    0 -260    0    0 |]zeros(256,256)                         |IM_NeuroElf_Slice_TRA  ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |XAxes      |$    0    0 -256    0 |                                        |AX_NeuroElf_Slice_TRA  ||    |           ||     |      |      |       |       |off    |       |    |      ||||
+        |XImage     |$  262    0  -16    0 |]zeros(256,16)                          |IM_NeuroElf_Slice_Hist ||    |           ||     |      |      |       |       |       |       |$1 2 4|    ||||
+        |XAxes      |$   -2    0  -20    0 |                                        |AX_NeuroElf_Slice_Hist ||    |           ||     |      |      |       |       |off    |       |    |      ||||
+        |Button     |$    0  260    0  -20 |]neuroelf_file('i', 'cb')               |BT_NeuroElf_setscalewin||    |           ||     |      |      |       |       |       |       |$1 2 4|    |||Manually set scaling window|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+coordinate boxes  | |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Label      |$ -516  -28  -48  -18 |X (mm):                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |0                                       |ED_NeuroElf_TALX       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$  -56  -28    0  -18 |Y (mm):                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |0                                       |ED_NeuroElf_TALY       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$  -56  -28    0  -18 |Z (mm):                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |0                                       |ED_NeuroElf_TALZ       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$   64   56    0  -18 |X (vox):                                |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |128                                     |ED_NeuroElf_BVSX       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$  -56  -28    0  -18 |Y (vox):                                |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |128                                     |ED_NeuroElf_BVSY       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$  -56  -28    0  -18 |Z (vox):                                |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |128                                     |ED_NeuroElf_BVSZ       ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Label      |$ -176  -30    0  -18 |Volume:                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   56    0    0  -24 |1                                       |ED_NeuroElf_TempPos    ||    |           ||     |      |      |off    |VIsTemp|       |       |$ 1 |      ||||
+        |Slider     |$   56    0  136  -18 |                                        |SL_NeuroElf_TempPos    ||    |$[1,120, 1]|$[1, 10] | | |      |off    |VIsTemp|       |       |$ 1 |      ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+stats config    |   |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |Frame      |$ -140   -3  280   -1 |0                                       |FR_NeuroElf_statdivide ||    |           ||     |      |      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$    4  -27  -60  -24 |0                                       |ED_NeuroElf_LowerThresh||    |           ||     |      |      |       |SLoaded,SngVMP||       |$ 1 |      ||||
+        |Label      |$   60    0  -44  -18 |<=V<=                                   |                       ||    |           ||     |center|      |       |       |       |       |$ 1 |      ||||
+        |Edit       |$   46    0  -60  -24 |0                                       |ED_NeuroElf_UpperThresh||    |           ||     |      |      |       |SLoaded,SngVMP||       |$ 1 |      ||||
+        |Label      |$   60    0   -6  -18 |,                                       |                       ||    |           ||     |center|      |       |       |       |       |$ 1 |      ||||
+        |DropDown   |$    6    0 -100  -22 |.05                                     |DD_NeuroElf_StatSetP   ||    |           ||$1   |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Label      |$ -172  -30  -36  -18 |+ tail:                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   36    4  -18    0 |                                        |CB_NeuroElf_PositivStat||    |           ||$1   |      |      |       |SLoaded,SngVMP||       |$ 1 |      ||||
+        |Label      |$   28   -4  -36    0 |- tail:                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   36    4  -18    0 |                                        |CB_NeuroElf_NegativStat||    |           ||$1   |      |      |       |SLoaded,SngVMP||       |$ 1 |      ||||
+        |Label      |$   28   -4  -56    0 |k-thresh:                               |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   56    4  -18    0 |                                        |CB_NeuroElf_kExtThresh ||    |           ||$1   |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Edit       |$   28   -2  -56  -24 |0                                       |ED_NeuroElf_kExtThresh ||    |           ||     |      |      |       |SLoaded,SngVMP||       |$ 1 |      ||||
+        |Button     |$ -216  -30  108  -24 |alphasim                                |BT_NeuroElf_alphasim   ||    |           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Button     |$  116    0  -92    0 |Clustertable                            |BT_NeuroElf_ClusterTable||   |           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Label      |$  100   -2  -40  -18 |split:                                  |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   40    4  -18    0 |                                        |CB_NeuroElf_SplitMaxima||    |           ||$1   |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Label      |$ -254  -32  -56    0 |icbm2tal                                |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   60    4  -18    0 |                                        |CB_NeuroElf_ICBM2TAL   ||    |           ||$1   |      |      |       |       |       |       |$ 1 |      |||Dis-/enable icbm2tal conversion of coordinates|
+        |Label      |$   28   -4  -56    0 |TDclient                                |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   60    4  -18    0 |                                        |CB_NeuroElf_TDClient   ||    |           ||$1   |      |      |       |       |       |       |$ 1 |      |||Dis-/enable Talairach Daemon database lookups for cluster tables|
+        |Label      |$   38   -4  -64    0 |Interpolate                             |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |Checkbox   |$   68    4  -18    0 |                                        |CB_NeuroElf_Interpolate||    |           ||$1   |      |      |       |       |       |       |$ 1 |      |||Dis-/enable interpolation of voxel-based files|
+        |Label      |$ -254  -32  -30  -18 |LUT                                     |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |RadioButton|$   36    2  -18    0 |                                        |RB_NeuroElf_LUTColor   ||    |           ||$1   |      |      |       |SLdNVMP,SngVMP||       |$ 1 |VMPCol||||neuroelf_gui('setstatthrcolor');
+        |Label      |$   24   -2  -30    0 |RGB                                     |                       ||    |           ||     |left  |      |       |       |       |       |$ 1 |      ||||
+        |RadioButton|$   36    2  -18    0 |                                        |RB_NeuroElf_RGBColor   ||    |           ||$0   |      |      |       |SLdNVMP,SngVMP||       |$ 1 |VMPCol||||neuroelf_gui('setstatthrcolor');
+        |Button     |$   40   -2  -28  -24 |]'+'                                    |BT_NeuroElf_RGBLowPos  ||$ 12|           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Button     |$   36    0    0    0 |]'++'                                   |BT_NeuroElf_RGBUppPos  ||$ 12|           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Button     |$   36    0    0    0 |]'-'                                    |BT_NeuroElf_RGBLowNeg  ||$ 12|           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |Button     |$   36    0    0    0 |]'- -'                                  |BT_NeuroElf_RGBUppNeg  ||$ 12|           ||     |      |      |       |SLdNVMP,SngVMP||       |$ 1 |      ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+zoomed/render image||                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |XImage     |$  458  174  512  512 |]zeros(512,512)                         |IM_NeuroElf_Slice_Zoom ||    |           ||     |      |      |       |       |off    |       |$ 2 |      ||||
+        |XAxes      |$    0    0    0    0 |                                        |AX_NeuroElf_Slice_Zoom ||    |           ||     |      |      |       |       |off    |       |$ 2 |      ||||
+        |XImage     |$    0    0    0    0 |]zeros(512,512)                         |IM_NeuroElf_Slice_Rend ||    |           ||     |      |      |       |       |off    |       |$ 4 |      ||||
+        |XAxes      |$    0    0    0    0 |                                        |AX_NeuroElf_Slice_Rend ||    |           ||     |      |      |       |       |off    |       |$ 4 |      ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+surface view   |    |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |XAxes      |$    0    0    0    0 |                                        |AX_NeuroElf_Surface    ||    |           ||     |      |      |       |       |off    |       |$ 3 |      ||||
+        |Edit       |$    2  -30  -60  -24 |0                                       |ED_NeuroElf_SrfLowerThr||    |           ||     |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$   64    0    0  -18 |<= stat <=                              |                       ||    |           ||     |center|      |       |       |       |       |$ 3 |      ||||
+        |Edit       |$   64    0    0  -24 |0                                       |ED_NeuroElf_SrfUpperThr||    |           ||     |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$   64    0  -36  -18 |, k >=                                  |                       ||    |           ||     |center|      |       |       |       |       |$ 3 |      ||||
+        |Edit       |$   42    0  -72  -24 |0.0mm                                   |ED_NeuroElf_SrfkExtThr ||    |           ||     |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$   80    0  -56  -18 |k-thresh:                               |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Checkbox   |$   56    4  -18    0 |                                        |CB_NeuroElf_SrfkExtThr ||    |           ||$1   |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$   26   -4  -36  -18 |+ tail:                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Checkbox   |$   36    4  -18    0 |                                        |CB_NeuroElf_SrfPosStat ||    |           ||$1   |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$   24   -4  -36    0 |- tail:                                 |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Checkbox   |$   36    4  -18    0 |                                        |CB_NeuroElf_SrfNegStat ||    |           ||$1   |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Label      |$ -492  -32  -50    0 |Set p <                                 |TX_NeuroElf_SrfSetP    ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |DropDown   |$   52    0 -100  -22 |.05                                     |DD_NeuroElf_SrfStatSetP||    |           ||$1   |      |      |       |SngSMP |       |       |$ 3 |      ||||
+        |Button     |$  106    0   96  -24 |Clustertable                            |BT_NeuroElf_SrfClusterT||    |           ||     |      |      |       |SLdNSMP,SngSMP||       |$ 3 |      ||||
+        |Label      |$  102    0  -30  -18 |LUT                                     |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |RadioButton|$   36    2  -18    0 |                                        |RB_NeuroElf_SrfLUTColor||    |           ||$1   |      |      |       |SLdNSMP,SngSMP||       |$ 3 |SMPCol||||neuroelf_gui('setsrfstatthrcolor');
+        |Label      |$   24   -2  -30    0 |RGB                                     |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |RadioButton|$   36    2  -18    0 |                                        |RB_NeuroElf_SrfRGBColor||    |           ||$0   |      |      |       |SLdNSMP,SngSMP||       |$ 3 |SMPCol||||neuroelf_gui('setsrfstatthrcolor');
+        |Button     |$   24   -2  -28  -24 |]'+'                                    |BT_NeuroElf_SrfRGBLPos ||$ 12|           ||     |      |      |       |SLdNSMP,SngSMP||       |$ 3 |      ||||
+        |Button     |$   34    0    0    0 |]'++'                                   |BT_NeuroElf_SrfRGBUPos ||$ 12|           ||     |      |      |       |SLdNSMP,SngSMP||       |$ 3 |      ||||
+        |Button     |$   34    0    0    0 |]'-'                                    |BT_NeuroElf_SrfRGBLNeg ||$ 12|           ||     |      |      |       |SLdNSMP,SngSMP||       |$ 3 |      ||||
+        |Button     |$   34    0    0    0 |]'- -'                                  |BT_NeuroElf_SrfRGBUNeg ||$ 12|           ||     |      |      |       |SLdNSMP,SngSMP||       |$ 3 |      ||||
+        |Button     |$   34  101   20  -20 |]neuroelf_file('i', 'ortho')            |BT_NeuroElf_SceneOrtho ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Set scenery display to orthographic projection|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'persp')            |BT_NeuroElf_ScenePersp ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Set scenery display to perspective projection|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'props')            |BT_NeuroElf_SceneProps ||    |           ||     |      |      |off    |SLoadSR|       |       |$ 3 |      |||Set surface properties (transformation, transparency)|
+        |ListBox    |$ -540 -133  536  -72 |Scene compilation (empty)               |LB_NeuroElf_Scenery    ||$ 9 |$[1, 3, 1] ||     |left  |      |off    |SLoadSR|       |       |$ 3 |      ||||
+        |Label      |$    0  -30   80  -18 |Viewpoint:                              |                       ||    |           ||     |left  |      |       |       |       |       |$ 3 |      ||||
+        |Edit       |$   80    0  456  -24 |0 (0)                                   |ED_NeuroElf_SrfViewPnt ||    |           ||     |      |      |       |       |       |       |$ 3 |      ||||
+        |Toggle     |$  460    2   20  -20 |]neuroelf_file('i', 'remote')           |BT_NeuroElf_RListener  ||    |           ||     |      |      |       |       |       |       |    |      |||En- or disable remote (folder) listening mode|
+        |Button     |$    0   78    0    0 |]neuroelf_file('i', 'trash')            |BT_NeuroElf_SceneRemove||    |           ||     |      |      |off    |SLoadSR|       |       |$ 3 |      |||Unload selected surfaces and their maps|
+        |Frame      |$    0   -4    0   -1 |                                        |                       ||    |           ||     |      |      |       |       |       |       |$ 3 |      |$ 0.5 0.5 0.5|||
+        |Button     |$    0  -23    0  -20 |]neuroelf_file('i', 'folder')           |BT_NeuroElf_SceneLoad  ||    |           ||     |      |      |       |       |       |       |$ 3 |      |||Reload objects from previously saved scenery|
+        |Button     |$    0  -22    0    0 |]neuroelf_file('i', 'disk')             |BT_NeuroElf_SceneSave  ||    |           ||     |      |      |off    |SLoadSR|       |       |$ 3 |      |||Save all objects from current scenery|
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+values under cursor||                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |MultiEdit  |$  436  130  536   36 |Values at cursor:                       |TX_NeuroElf_SValues    ||$ 9 |           ||     |left  |      |       |       |       |       |$1 2 4|    ||||
+        |           |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+time course plot  | |                      |                                        |                       ||    |           ||     |      |      |       |       |       |       |    |      ||||
+        |XAxes      |$  468   24  500  104 |                                        |AX_NeuroElf_TC_Plot    ||    |           ||     |      |      |       |       |       |TCPlot |    |      ||||
+---  END_UICONTROLS  ---
