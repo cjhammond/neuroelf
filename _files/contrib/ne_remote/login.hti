@@ -1,7 +1,7 @@
 <?xml version="1.0"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<title>NeuroElf v09c - remote web interface - login</title>
+		<title>NeuroElf v09d - remote web interface - login</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<link rel="stylesheet" href="ne_remote_login.css" />
 
@@ -10,13 +10,13 @@
     NeuroElf remote web interface
     HTML component
 
-Version:  v0.9c
-Build:    12012418
-Date:     Jan-24 2012, 6:08 PM EST
+Version:  v0.9d
+Build:    14080415
+Date:     Aug-04 2014, 3:16 PM EST
 Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
 URL/Info: http://neuroelf.net/
 
-Copyright (c) 2012, Jochen Weber
+Copyright (c) 2012, 2014, Jochen Weber
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
