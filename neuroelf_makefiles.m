@@ -31,8 +31,8 @@ function neuroelf_makefiles(opts)
 % No output fields.
 
 % Version:  v0.9d
-% Build:    14071415
-% Date:     Jul-14 2014, 3:29 PM EST
+% Build:    14080112
+% Date:     Aug-01 2014, 12:58 PM EST
 % Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
 % URL/Info: http://neuroelf.net/
 
@@ -89,7 +89,7 @@ elseif nargin > 0 && ...
         'NeuroElf - makefiles', 1, ...
         dfa(1, [2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 1, 1]));
     if ~iscell(mfa) || ...
-        numel(mfa) ~= 14
+        numel(mfa) ~= 15
         return;
     end
     mfa = ddeblank(mfa);

@@ -17,13 +17,13 @@ Output fields:
 
 Note: all output is computed over all elements--as if used with v(:) !
 
-% Version:  v0.9a
-% Build:    11102110
-% Date:     May-17 2010, 10:48 AM EST
+% Version:  v0.9d
+% Build:    14080113
+% Date:     Aug-01 2014, 1:35 PM EST
 % Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
 % URL/Info: http://neuroelf.net/
 
-Copyright (c) 2010, Jochen Weber
+Copyright (c) 2010, 2014, Jochen Weber
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "mex.h"
 #include "math.h"
+#include "isinfnan.h"
 
 
 /* diverse PREPROCESSOR patterns */
@@ -74,9 +75,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define MIN_MAX_MAKEMEANVAR(NELEM) tvar = mvar / (double) (NELEM - 1);
 
 #define MIN_MAX_SAFE \
-        if (((*lprlf == *lplpinf) && (lprlf[1] == lplpinf[1])) || \
-            ((*lprlf == *lplninf) && (lprlf[1] == lplninf[1])) || \
-            ((*lprlf == *lplpnan) && (lprlf[1] == lplpnan[1]))) continue;
+        IF_IS_BAD_VAL( tval ) continue;
 
 #define MIN_MAX_VALPOS \
         if (tval > tmax) { tmax = tval; maxpos = numc; } \
@@ -115,11 +114,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     MIN_MAX_LOOP_CLOSE \
     MIN_MAX_MAKEMEANVAR( tnum )
 
-/* values for isinf/isnan test */
-unsigned long lplpinf[2] = {0, 0};
-unsigned long lplninf[2] = {0, 0};
-unsigned long lplpnan[2] = {0, 0};
-const unsigned long *lprlf;
 
 /* main function called by Matlab */
 
@@ -143,24 +137,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     double tval, tmin, tmax, tmean, tvar;
     signed long ne = 0, numc = 0, tnum = 0, maxpos = -1, minpos = -1;
+    
+    VARS_FOR_ISINFNAN;
 
 	if (nrhs < 1 || nrhs > 2 || nlhs > 1)
 		mexErrMsgTxt("Bad number of input/output arguments.");
-    lprlf = (const unsigned long *) (&tval);
-
-    tval = mxGetInf();
-    *lplpinf = *lprlf;
-    lplpinf[1] = lprlf[1];
-
-    tval = -tval;
-    *lplninf = *lprlf;
-    lplninf[1] = lprlf[1];
-
-    tval = mxGetNaN();
-    *lplpnan = *lprlf;
-    lplpnan[1] = lprlf[1];
 
     tval = 0.0;
+    INIT_INF_NAN_BAD_VAL();
 
     cid = mxGetClassID(*prhs);
     ne = mxGetNumberOfElements(*prhs);
@@ -180,7 +164,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         dflags = *((const double *) mxGetData(prhs[1]));
         if (!mxIsInf(dflags) && !mxIsNaN(dflags) &&
             (dflags >= 0.0) && (dflags <= 7.0))
-            flags = (unsigned long) dflags;
+            flags = (unsigned int) dflags;
         if ((cid != mxDOUBLE_CLASS) && (cid != mxSINGLE_CLASS))
             flags &= 0x1;
         else

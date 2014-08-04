@@ -951,7 +951,7 @@ try
                         stslab ...
                     );
                 end
-            else
+            elseif ~isequal(vtrf{stc}, eye(4))
                 mdmtrfpl.(stslab) = vtrf{stc};
             end
         end

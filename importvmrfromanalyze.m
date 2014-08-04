@@ -19,8 +19,8 @@ function vmr = importvmrfromanalyze(img, imeth, hl, res, trf, bbox)
 % Note: this function requires the MEX file flexinterpn.
 
 % Version:  v0.9d
-% Build:    14052418
-% Date:     May-24 2014, 6:22 PM EST
+% Build:    14080112
+% Date:     Aug-01 2014, 12:58 PM EST
 % Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
 % URL/Info: http://neuroelf.net/
 
@@ -243,7 +243,7 @@ xff(0, 'updatestate', updstate);
 if ~isequal(hl, [0, 1])
     vmr.LimitVMR(struct('recalc8b', true, 'range', hl));
 else
-    vmr.VMRData = uint8(floor((255.999 / double(max(vmr16(:)))) .* double(vmr16)));
+    vmr.VMRData = uint8(floor((225.999 / double(max(vmr16(:)))) .* double(vmr16)));
 end
 vmr.MeanOriginalValue = floor(mean(vmr.VMRData16(:)));
 vmr.MaxOriginalValue = double(max(vmr.VMRData16(:)));
