@@ -15,8 +15,8 @@ function hfile = vmp_ImportSPMMaps(hfile, maps, opts)
 % No output fields.
 
 % Version:  v0.9d
-% Build:    14061710
-% Date:     Jun-17 2014, 10:30 AM EST
+% Build:    14080417
+% Date:     Aug-04 2014, 5:05 PM EST
 % Author:   Jochen Weber, SCAN Unit, Columbia University, NYC, NY, USA
 % URL/Info: http://neuroelf.net/
 
@@ -263,7 +263,13 @@ for oc = 1:nobj
 
     % get content of map
     sobj = xffgetscont(mobj{oc}.L);
-    [sfn{1:2}] = fileparts(sobj.F);
+    if isfield(sobj.H, 'GZIPfile') && ...
+        ischar(sobj.H.GZIPfile) && ...
+       ~isempty(sobj.H.GZIPfile)
+        [sfn{1:2}] = fileparts(sobj.H.GZIPfile);
+    else
+        [sfn{1:2}] = fileparts(sobj.F);
+    end
     if ~isempty(sfn{1})
         [pfn{1:2}] = fileparts(sfn{1});
         sfn{2} = [pfn{2} '/' sfn{2}];
